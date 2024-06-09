@@ -2,10 +2,19 @@ package project.task_app.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import project.task_app.dto.MemberRequestDto;
+import project.task_app.dto.TaskRequestDto;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Task extends BaseEntity{
 
     /**
@@ -26,4 +35,17 @@ public class Task extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") //FK Column
     private Member member;
+
+
+    //Update (수정일자 업데이트)
+    public void update(TaskRequestDto dto) {
+        if (dto.getTitle() != null) {
+            this.title = dto.getTitle();
+        }
+        if (dto.getContent() != null) {
+            this.content = dto.getContent();
+        }
+
+//        setUpdatedAt(LocalDateTime.now());
+    }
 }

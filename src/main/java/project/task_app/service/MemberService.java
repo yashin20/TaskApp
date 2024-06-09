@@ -1,12 +1,15 @@
 package project.task_app.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.task_app.dto.MemberRequestDto;
 import project.task_app.dto.MemberResponseDto;
 import project.task_app.entity.Member;
+import project.task_app.exception.DataAlreadyExistsException;
 import project.task_app.exception.DataNotFoundException;
+import project.task_app.exception.PasswordCheckFailedException;
 import project.task_app.repository.MemberRepository;
 
 import java.time.LocalDateTime;
@@ -18,23 +21,62 @@ import java.time.LocalDateTime;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    //비밀번호 암호화
+    public void passwordEncoding(MemberRequestDto dto) {
+        String encoded = passwordEncoder.encode(dto.getPassword());
+        dto.setPassword(encoded);
+    }
+
 
     //Create Member(회원 생성)
     @Transactional
     public Long createMember(MemberRequestDto requestDto) {
 
+        //0. 중복 검사 (username, email)
+        duplicateValidation(requestDto);
+
+        //0. 비밀번호 이중 검사
+        passwordDoubleCheck(requestDto);
+
+        //0. 비밀번호 암호화
+        passwordEncoding(requestDto);
+
         //1. create member
         Member entity = requestDto.toEntity();
 
         //2. createdAt, updatedAt setting
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setUpdatedAt(LocalDateTime.now());
+
 
         //3. save member
-        Member member = memberRepository.save(entity);
-        return member.getId();
+        Member createdMember = memberRepository.save(entity);
+        return createdMember.getId();
 
     }
+
+    //중복 검사
+    public void duplicateValidation(MemberRequestDto requestDto) {
+
+        //username 중복 확인
+        if (memberRepository.findByUsername(requestDto.getUsername()).isPresent()) {
+            throw new DataAlreadyExistsException("이미 존재하는 username 입니다.");
+        }
+
+        //email 중복 확인
+        if (memberRepository.findByEmail(requestDto.getEmail()).isPresent()) {
+            throw new DataAlreadyExistsException("이미 존재하는 E-mail 입니다.");
+        }
+    }
+
+    //비밀번호 이중 검사
+    public void passwordDoubleCheck(MemberRequestDto requestDto) {
+
+        if (!requestDto.getPassword().equals(requestDto.getPasswordCheck())) {
+            throw new PasswordCheckFailedException("비밀번호가 동일하지 않습니다.");
+        }
+    }
+
 
 
     //Read Member(회원 정보 확인)
@@ -78,5 +120,12 @@ public class MemberService {
 
         //3. Return delete member ID
         return requestDto.getId();
+    }
+
+
+    //Find By Username
+    public Member findByUsername(String username) {
+        return memberRepository.findByUsername(username)
+                .orElseThrow(() -> new DataNotFoundException("존재하지 않는 회원 입니다."));
     }
 }

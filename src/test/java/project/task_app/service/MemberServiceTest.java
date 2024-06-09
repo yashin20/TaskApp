@@ -6,11 +6,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import project.task_app.dto.MemberRequestDto;
 import project.task_app.dto.MemberResponseDto;
 import project.task_app.entity.Member;
+import project.task_app.exception.DataAlreadyExistsException;
 import project.task_app.exception.DataNotFoundException;
 import project.task_app.repository.MemberRepository;
 
@@ -27,12 +29,13 @@ class MemberServiceTest {
     @Autowired private MemberRepository memberRepository;
     @Autowired private MemberService memberService;
     @Autowired private EntityManager em;
+    @Autowired PasswordEncoder passwordEncoder;
 
     @Test
     @DisplayName("Create Member Test")
     public void testCreateMember() throws Exception {
         //given
-        MemberRequestDto dto = new MemberRequestDto("username", "password", "email@example.com", "010-1111-1111");
+        MemberRequestDto dto = new MemberRequestDto("username", "password", "password", "email@example.com", "010-1111-1111");
         Member member = dto.toEntity();
 
         //when
@@ -42,9 +45,48 @@ class MemberServiceTest {
         //then
         assertNotNull(findMember);
         assertEquals("username", findMember.getUsername());
-        assertEquals("password", findMember.getPassword());
+        assertTrue(passwordEncoder.matches("password", findMember.getPassword()));
         assertEquals("email@example.com", findMember.getEmail());
         assertEquals("010-1111-1111", findMember.getPhone());
+    }
+
+    @Test
+    @DisplayName("중복 검사 테스트")
+    public void duplicateValidation_Test() throws Exception {
+        //given
+        //기존 회원 생성
+        Member member1 = new Member("sameUsername", "password", "email1@example.com", "010-1111-1111");
+        Member member2 = new Member("member2", "password", "sameEmail@example.com", "010-1111-1111");
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        //when & then
+        //1. username : sameUsername
+        MemberRequestDto dto1 = new MemberRequestDto("sameUsername", "password", "password",
+                "email@example.com", "010-1111-1111");
+        assertThatThrownBy(() -> memberService.createMember(dto1))
+                .isInstanceOf(DataAlreadyExistsException.class)
+                .hasMessageContaining("이미 존재하는 username 입니다.");
+
+
+        //2. email : sameEmail@example.com
+        MemberRequestDto dto2 = new MemberRequestDto("member3", "password", "password",
+                "sameEmail@example.com", "010-1111-1111");
+        assertThatThrownBy(() -> memberService.createMember(dto2))
+                .isInstanceOf(DataAlreadyExistsException.class)
+                .hasMessageContaining("이미 존재하는 E-mail 입니다.");
+
+    }
+
+    @Test
+    @DisplayName("비밀번호 중복 체크 테스트")
+    public void passwordDoubleCheckTest() throws Exception {
+        //given
+
+        //when
+
+        //then
+
     }
 
 
@@ -52,7 +94,7 @@ class MemberServiceTest {
     @DisplayName("Read Member(회원 정보 확인) 테스트")
     public void testReadMember() throws Exception {
         //given
-        MemberRequestDto dto = new MemberRequestDto("username", "password", "email@example.com", "010-1111-1111");
+        MemberRequestDto dto = new MemberRequestDto("username", "password", "password", "email@example.com", "010-1111-1111");
         Member member = dto.toEntity(); //id가 없는 상태
         em.persist(member);
         em.flush(); //DB 저장 후 id 부여 받음
@@ -85,7 +127,7 @@ class MemberServiceTest {
         //given
 
         //1. 회원 저장 + memberId 받아 놓기
-        MemberRequestDto dto = new MemberRequestDto("username", "password",
+        MemberRequestDto dto = new MemberRequestDto("username", "password", "password",
                 "email@example.com", "010-1111-1111");
         Member member = dto.toEntity();
         em.persist(member);
@@ -123,7 +165,7 @@ class MemberServiceTest {
     @DisplayName("Delete Member(회원 삭제) 테스트")
     public void deleteMemberTest() throws Exception {
         // given
-        MemberRequestDto createDto = new MemberRequestDto("username", "password", "email@example.com", "010-1111-1111");
+        MemberRequestDto createDto = new MemberRequestDto("username", "password", "password", "email@example.com", "010-1111-1111");
         Member member = createDto.toEntity();
         em.persist(member);
         em.flush();

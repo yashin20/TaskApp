@@ -23,6 +23,7 @@ public class Member extends BaseEntity{
      * password
      * email
      * phone
+     * userRole
      */
 
     @Id @GeneratedValue
@@ -34,6 +35,9 @@ public class Member extends BaseEntity{
 
     private String email;
     private String phone;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole = UserRole.USER;
 
     @OneToMany(mappedBy = "member")
     private List<Task> tasks = new ArrayList<>();
@@ -56,9 +60,6 @@ public class Member extends BaseEntity{
 
     //Update (수정일자 업데이트)
     public void update(MemberRequestDto dto) {
-        if (dto.getUsername() != null) {
-            this.username = dto.getUsername();
-        }
         if (dto.getPassword() != null) {
             this.password = dto.getPassword();
         }
@@ -68,7 +69,5 @@ public class Member extends BaseEntity{
         if (dto.getPhone() != null) {
             this.phone = dto.getPhone();
         }
-
-        setUpdatedAt(LocalDateTime.now());
     }
 }
