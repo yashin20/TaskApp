@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import project.task_app.entity.Member;
+import project.task_app.entity.UserRole;
+
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberResponseDto {
+public class MemberResponseDto implements Serializable {
 
     /**
      * Member 응답 DTO
@@ -28,6 +31,8 @@ public class MemberResponseDto {
     private String email;
     private String phone;
 
+    private UserRole role;
+
     private String createdAt;
     private String updatedAt;
 
@@ -45,6 +50,8 @@ public class MemberResponseDto {
         this.password = entity.getPassword();
         this.email = entity.getEmail();
         this.phone = entity.getPhone();
+
+        this.role = entity.getUserRole();
 
         this.createdAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();

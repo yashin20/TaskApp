@@ -1,10 +1,7 @@
 package project.task_app.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import project.task_app.dto.MemberRequestDto;
 
 import java.time.LocalDateTime;
@@ -15,6 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
 public class Member extends BaseEntity{
 
     /**
@@ -69,5 +67,14 @@ public class Member extends BaseEntity{
         if (dto.getPhone() != null) {
             this.phone = dto.getPhone();
         }
+    }
+
+
+
+    /*소셜 로그인시 이미 등록된 회원이라면 수정날짜만 업데이트하고
+    * 기존 데이터는 그대로 보존하도록 예외처리*/
+    public Member updateUpdateAt() {
+        this.onPreUpdate();
+        return this;
     }
 }

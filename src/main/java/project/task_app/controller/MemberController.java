@@ -3,6 +3,7 @@ package project.task_app.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 public class MemberController {
 
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Login
@@ -97,7 +99,7 @@ public class MemberController {
     }
 
     /**
-     * member Information update
+     * member Information update (email, phone)
      */
     @GetMapping("/info/update")
     public String infoUpdateForm(Model model) {
@@ -152,6 +154,72 @@ public class MemberController {
             model.addAttribute("errorMessage", ex.getMessage());
 
             return "members/info-update";
+        }
+
+        return "redirect:/members/info";
+    }
+
+
+    /**
+     * password update
+     */
+    @GetMapping("/pw-update")
+    public String passwordUpdateForm(Model model) {
+
+        Member currentMember = getCurrentMember();
+        //id, currentPassword, new password, new password check
+        MemberRequestDto requestDto = new MemberRequestDto(currentMember.getId(), "", "", "", Boolean.TRUE);
+        model.addAttribute("requestDto", requestDto);
+        return "members/password-update";
+    }
+
+    @PostMapping("/pw-update")
+    public String passwordUpdate(@ModelAttribute("requestDto") @Validated(MemberRequestDto.UpdatePassword.class) MemberRequestDto dto,
+                                 BindingResult bindingResult, Model model) {
+
+
+        // 현재 로그인된 회원 객체
+        Member currentMember = getCurrentMember();
+
+        //유효성 검사 오류 발생시
+        if (bindingResult.hasErrors()) {
+
+            //id, currentPassword, new password, new password check
+            MemberRequestDto requestDto = new MemberRequestDto(currentMember.getId(), "", "", "", Boolean.TRUE);
+            model.addAttribute("requestDto", requestDto);
+
+            //에러 메시지 반환
+            List<String> errorMassage = bindingResult.getAllErrors().stream()
+                    .map(objectError -> objectError.getDefaultMessage())
+                    .collect(Collectors.toList());
+            model.addAttribute("errorMessage", errorMassage);
+
+            return "members/password-update"; // 유효성 검사 실패 시 다시 폼으로
+        }
+
+        //현재 비밀번호 검사
+        if (memberService.authenticate(currentMember.getUsername(), dto.getPassword())) {
+
+            //id, currentPassword, new password, new password check
+            MemberRequestDto requestDto = new MemberRequestDto(currentMember.getId(), "", "", "", Boolean.TRUE);
+            model.addAttribute("requestDto", requestDto);
+
+            model.addAttribute("errorMessage", "현재 비밀번호가 알맞지 않습니다.");
+
+            return "members/password-update";
+        }
+
+        try {
+            //회원 정보 업데이트
+            memberService.updateMember(dto);
+        }
+
+        // 중복 검사 오류 시, 에러 처리 로직
+        catch (DataAlreadyExistsException | PasswordCheckFailedException ex) {
+            bindingResult.reject("errorMessage", ex.getMessage());
+            model.addAttribute("errorMessage", ex.getMessage());
+
+            return "members/password-update";
         }
 
         return "redirect:/members/info";

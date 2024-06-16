@@ -13,6 +13,7 @@ import project.task_app.exception.PasswordCheckFailedException;
 import project.task_app.repository.MemberRepository;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 @Service
@@ -84,7 +85,7 @@ public class MemberService {
 
         //1. member 찾기
         Member member = memberRepository.findById(requestDto.getId())
-                .orElseThrow(() -> new DataNotFoundException("존재하지 않는 회원 입니다."));
+                .orElseThrow(() -> new DataNotFoundException("MemberService.getMemberInformation : 존재하지 않는 회원 입니다."));
 
         //2. member -> MemberResponseDto
         return new MemberResponseDto(member);
@@ -97,7 +98,18 @@ public class MemberService {
 
         //1. member 찾기
         Member member = memberRepository.findById(requestDto.getId())
-                .orElseThrow(() -> new DataNotFoundException("존재하지 않는 회원 입니다."));
+                .orElseThrow(() -> new DataNotFoundException("MemberService.updateMember - 존재하지 않는 회원 입니다."));
+
+        //비밀번호 수정 시, password == passwordCheck 확인
+        if (requestDto.getPassword() != null && requestDto.getPasswordCheck() != null &&
+                !requestDto.getPassword().isEmpty() && !requestDto.getPasswordCheck().isEmpty()) {
+            passwordDoubleCheck(requestDto);
+
+
+            // 비밀번호 암호화
+            passwordEncoding(requestDto);
+        }
+
 
         //2. update member
         member.update(requestDto);
@@ -126,6 +138,16 @@ public class MemberService {
     //Find By Username
     public Member findByUsername(String username) {
         return memberRepository.findByUsername(username)
-                .orElseThrow(() -> new DataNotFoundException("존재하지 않는 회원 입니다."));
+                .orElseThrow(() -> new DataNotFoundException("MemberService.findByUsername - 존재하지 않는 회원 입니다."));
+    }
+
+
+    //로그인 인증 로직
+    public boolean authenticate(String username, String password) {
+        Optional<Member> findMember = memberRepository.findByUsername(username);
+        if (findMember.isPresent()) {
+            return passwordEncoder.matches(password, findMember.get().getPassword());
+        }
+        return false;
     }
 }

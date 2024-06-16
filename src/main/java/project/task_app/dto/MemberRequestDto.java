@@ -61,6 +61,14 @@ public class MemberRequestDto {
 
 
 
+
+    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}", groups = {UpdatePassword.class},
+            message = "비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
+    @NotBlank(groups = {Create.class, UpdatePassword.class}, message = "비밀번호는 필수 입력 값입니다.")
+    private String currentPassword;
+
+
+
     //등록 요청
     public MemberRequestDto(String username, String password ,String passwordCheck ,String email, String phone) {
         this.username = username;
@@ -107,4 +115,24 @@ public class MemberRequestDto {
         this.email = email;
         this.phone = phone;
     }
+
+    /**
+     * 수정 가능 필드
+     * @param password
+     * @param passwordCheck
+     *
+     * email, phone 수정 요청 생성자와
+     * password 수정 요청 생성자는 서로 매개변수의 순서와 구성이 같기 때문에
+     * 구분이 불가하다
+     * 따라서 'isPasswordUpdate' 를 매개변수로 추가하여 구분한다.
+     */
+    public MemberRequestDto(Long id, String currentPassword, String password, String passwordCheck, boolean isPasswordUpdate) {
+        this.id = id;
+        this.currentPassword = currentPassword;
+        this.password = password;
+        this.passwordCheck = passwordCheck;
+    }
+
+
+
 }
