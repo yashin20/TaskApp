@@ -37,7 +37,7 @@ public class WebSecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         // 정적 리소스가 위치한 파일의 보안 처리를 무시 (누구든 접근 가능)
         return (web -> web.ignoring()
-                .requestMatchers("/img/**", "/css/styles.css")
+                .requestMatchers("/img/**", "/css/**", "/css/styles.css")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()));
     }
 

@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/headerstyles.css">
+    <link rel="stylesheet" href="/css/footerstyles.css">
 </head>
 <body>
-
+<!--header-->
+<header class="header" th:replace="~{fragments/header :: header}"></header>
 
 
 <!--Login Form-->
@@ -53,5 +56,8 @@
     </form>
 </div>
 
+
+<!--footer-->
+<footer class="footer" th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

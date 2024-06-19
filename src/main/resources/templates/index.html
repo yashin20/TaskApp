@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/headerstyles.css">
+    <link rel="stylesheet" href="/css/footerstyles.css">
 </head>
 <body>
+<!--header-->
+<header class="header" th:replace="~{fragments/header :: header}"></header>
+
 
 <h1>Index Page</h1>
 
 <p>로그인된 회원 : </p>
-<h3 th:text="${signedMember}"></h3>
+<a th:text="${signedMember}" href="members/info"></a>
 
-
+<!--로그인 버튼-->
 <a href="members/login">로그인</a>
-<a href="members/info">회원 정보</a>
 
+
+<!--footer-->
+<footer class="footer" th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

@@ -1,0 +1,88 @@
+
+.header-nav {
+    background: rgba(0,0,0,.5);
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-size: 24px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.right-container {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 요소들을 배치 */
+    align-items: flex-end; /* 오른쪽 정렬 */
+}
+
+.search-form {
+    margin-bottom: 10px; /* 검색 폼과 버튼 사이 여백 조정 */
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap; /* 요소들을 여러 줄에 걸쳐 배치 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+}
+
+.buttons a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 5px; /* 각 버튼들 사이 여백 조정 */
+    padding: 10px 20px;
+    background: #444;
+    border-radius: 5px;
+    transition: background .5s;
+}
+
+.buttons a:hover {
+    background: #666;
+}
+
+
+
+.search-form {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* 오른쪽 여백 추가 */
+}
+
+.search-input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    outline: none;
+    background: transparent;
+    color: #fff;
+}
+
+.search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background: #444;
+    color: #fff;
+    cursor: pointer;
+    transition: background .5s;
+    margin-left: 10px; /* Search 버튼과 검색창 사이 여백 추가 */
+}
+
+.search-button:hover {
+    background: #666;
+}
