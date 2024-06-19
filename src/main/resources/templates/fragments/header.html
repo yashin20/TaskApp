@@ -21,14 +21,17 @@
 
                 <!-- 비로그인 상태 버튼 -->
                 <div class="buttons" sec:authorize="isAnonymous()">
-                    <a href="/members/login" role="button">로그인</a>
-                    <a href="/members/join" role="button">회원가입</a>
+                    <a href="/members/login" role="button" style="background: green;">로그인</a>
+                    <a href="/members/join" role="button" style="background: dodgerblue;">회원가입</a>
                 </div>
 
                 <!-- 로그인 상태 버튼 -->
                 <div class="buttons" sec:authorize="isAuthenticated()">
-                    <a th:text="${signedMember}" href="members/info">username</a>
-                    <a href="/members/logout" role="button">로그아웃</a>
+                    <a th:text="${signedMember}" th:href="@{/members/info}">username</a>
+                    <!--Logout Post 요청 Form-->
+                    <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none"></form>
+                    <a role="button" style="background: red;"
+                       onclick="document.getElementById('logoutForm').submit(); return false;">로그아웃</a>
                 </div>
             </div>
 

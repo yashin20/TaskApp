@@ -95,6 +95,9 @@ public class MemberController {
         MemberResponseDto responseDto = new MemberResponseDto(currentMember);
         model.addAttribute("responseDto", responseDto);
 
+        //현재 로그인된 Username
+        model.addAttribute("signedMember", memberService.getCurrentUsername());
+
         return "members/info";
     }
 
@@ -113,6 +116,9 @@ public class MemberController {
         // email , phone 수정가능
         MemberRequestDto requestDto = new MemberRequestDto(responseDto.getId(), responseDto.getEmail(), responseDto.getPhone());
         model.addAttribute("requestDto", requestDto);
+
+        //현재 로그인된 Username
+        model.addAttribute("signedMember", memberService.getCurrentUsername());
 
         return "members/info-update";
     }
@@ -170,6 +176,10 @@ public class MemberController {
         //id, currentPassword, new password, new password check
         MemberRequestDto requestDto = new MemberRequestDto(currentMember.getId(), "", "", "", Boolean.TRUE);
         model.addAttribute("requestDto", requestDto);
+
+        //현재 로그인된 Username
+        model.addAttribute("signedMember", memberService.getCurrentUsername());
+
         return "members/password-update";
     }
 
