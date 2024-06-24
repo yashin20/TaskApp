@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task App</title>
+    <link rel="stylesheet" href="/css/task-styles.css">
+    <link rel="stylesheet" href="/css/header-styles.css">
+    <link rel="stylesheet" href="/css/footer-styles.css">
+    <style>
+        .task-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* align items at the start */
+            height: 70vh; /* reduce the height */
+            margin-top: 100px; /* add top margin */
+        }
+
+        .task-form {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<!--header-->
+<header class="header" th:replace="~{fragments/header :: header}"></header>
+
+<div class="task-container">
+
+    <!--task 작성란-->
+    <form th:action="@{'/tasks/' + ${taskId} + '/update'}" class="task-form" th:object="${task}" method="post">
+    <div>
+
+        <h2>Task 수정 페이지</h2>
+
+        <input type="hidden" th:field="*{id}" name="task-id">
+        <!--task title-->
+        <div class="task-box">
+            <input th:field="*{title}" id="task-title-input" type="text" name="task-title" required="">
+            <label for="task-title-input">Task Title</label>
+        </div>
+
+        <!--task content-->
+        <div class="task-box">
+            <textarea th:field="*{content}" id="task-content-textarea" name="task-content" ></textarea>
+            <label for="task-content-textarea">Task Content</label>
+        </div>
+
+        <button type="submit" style="background: green;">SAVE TASK</button>
+    </div>
+    </form>
+
+</div>
+
+<!--footer-->
+<footer class="footer" th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

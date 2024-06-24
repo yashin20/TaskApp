@@ -11,9 +11,9 @@ public class TaskResponseDto {
      * <p>
      * 등록 요청 - return : id
      * <p>
-     * 조회 요청 - return : id, title, content, memberId, createdAt, updatedAt
+     * 조회 요청 - return : id, title, content, memberId, isChecked, createdAt, updatedAt
      * <p>
-     * 수정 요청 - return : id, title, content, memberId, createdAt, updatedAt
+     * 수정 요청 - return : id, title, content, memberId, isChecked, createdAt, updatedAt
      * <p>
      * 삭제 요청 - return : id
      */
@@ -23,6 +23,8 @@ public class TaskResponseDto {
     private String content;
 
     private Long memberId;
+
+    private Boolean isChecked; //task 완료 여부
 
     private String createdAt;
     private String updatedAt;
@@ -38,6 +40,7 @@ public class TaskResponseDto {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.memberId = entity.getMember().getId();
+        this.isChecked = entity.getIsChecked();
 
         this.createdAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task App</title>
+    <link rel="stylesheet" href="/css/task-info-styles.css">
+    <link rel="stylesheet" href="/css/header-styles.css">
+    <link rel="stylesheet" href="/css/footer-styles.css">
+
+</head>
+<body>
+<!--header-->
+<header class="header" th:replace="~{fragments/header :: header}"></header>
+
+<div class="task-container">
+
+    <!--task information-->
+    <div class="task-form">
+
+        <h2>Task 상세 정보</h2>
+
+        <input type="hidden" th:value="${task.id}" name="task-id">
+        <!--task title-->
+        <div class="task-box">
+            <input id="task-title-input" th:value="${task.title}" type="text" name="task-title" required="" readonly>
+            <label for="task-title-input">Task Title</label>
+        </div>
+
+        <!--task content-->
+        <div class="task-box">
+            <textarea id="task-content-textarea" th:text="${task.content}" name="task-content" readonly></textarea>
+            <label for="task-content-textarea">Task Content</label>
+        </div>
+
+        <!--task update button-->
+        <form th:action="@{'/tasks/' + ${task.id} + '/update'}" method="get">
+            <button type="submit" style="background: dodgerblue;">Task 수정</button>
+        </form>
+
+        <!--task delete button-->
+        <form th:action="@{'/tasks/' + ${task.id} + '/delete'}" method="post">
+            <button type="submit" style="background: red;">Task 삭제</button>
+        </form>
+
+    </div>
+
+</div>
+
+<!--footer-->
+<footer class="footer" th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

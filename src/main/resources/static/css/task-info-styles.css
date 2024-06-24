@@ -1,0 +1,126 @@
+.task-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.task-form {
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 40px;
+    width: 48%;
+    box-sizing: border-box;
+    color: #fff;
+    height: 500px;
+}
+
+.task-table {
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 40px;
+    width: 48%;
+    box-sizing: border-box;
+    color: #fff;
+    height: 670px;
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-box {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.task-box input, .task-box textarea {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+.task-box label {
+    position: absolute;
+    top: -20px; /* 라벨을 입력 박스 위로 이동 */
+    left: 0;
+    padding: 10px 0;
+    font-size: 12px; /* 작은 크기로 설정 */
+    color: #fff;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.task-box input:focus ~ label,
+.task-box input:valid ~ label,
+.task-box textarea:focus ~ label,
+.task-box textarea:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
+
+.task-box textarea {
+    resize: none;
+    height: 150px;
+}
+
+.task-form button {
+    background: #444;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background 0.5s;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.task-form button:hover {
+    background: #666;
+}
+
+.task-table table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+.task-table th, .task-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+}
+
+.task-table th {
+    background: #555;
+}
+
+.task-table tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
+.task-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* align items at the start */
+    height: 70vh; /* reduce the height */
+    margin-top: 100px; /* add top margin */
+}
+
+.task-form {
+    width: 50%;
+}

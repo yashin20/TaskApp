@@ -1,27 +1,63 @@
-/* Footer 스타일 */
-.footer-container {
-    background: rgba(0,0,0,.5);
-    box-shadow: 0 15px 25px rgba(0,0,0,.6);
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    color: #fff;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 1000;
+html {
+    height: 100%;
 }
 
-.contact-info {
+
+.info-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.phone-number {
-    margin-left: 5px;
+.task-list table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
 }
+
+.task-list-container {
+    flex: 1;
+    margin: 0 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.task-list {
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 40px;
+    width: 30%;
+    box-sizing: border-box;
+    color: #fff;
+
+    flex: 1;
+    margin: 0 10px;
+}
+
+.info-box h2, .task-list table {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+}
+
+.task-list th, .task-list td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+}
+
+.task-list th {
+    background: #555;
+}
+
+.task-list tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
 
 
 /*info-update.html*/
@@ -30,12 +66,8 @@ html {
 }
 
 .info-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
     width: 400px;
     padding: 40px;
-    transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, .5);
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
@@ -63,15 +95,14 @@ html {
     border-bottom: 1px solid #fff;
     outline: none;
     background: transparent;
-    /*  pointer-events: none; Make inputs non-interactive */
 }
 
 .info-box label {
     position: absolute;
-    top: -20px; /* Adjust to desired position */
+    top: -20px;
     left: 0;
     padding: 10px 0;
-    font-size: 12px; /* Small font size */
+    font-size: 12px;
     color: #fff;
     pointer-events: none;
     transition: .5s;

@@ -1,11 +1,20 @@
 package project.task_app.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import project.task_app.entity.Member;
 import project.task_app.entity.Task;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TaskRequestDto {
+
+    public interface Create {}
+    public interface Update {}
 
     /**
      * Task 요청 DTO
@@ -19,8 +28,12 @@ public class TaskRequestDto {
      * 삭제 요청 : id
      */
 
+    @NotNull(groups = {Update.class}, message = "Title 은 필수 입력 값 입니다.")
     private Long id;
+
+    @NotBlank(groups = {Create.class, Update.class}, message = "Title 은 필수 입력 값 입니다.")
     private String title;
+    @NotBlank(groups = {Create.class, Update.class}, message = "Content 는 필수 입력 값 입니다.")
     private String content;
 
     private Member member;

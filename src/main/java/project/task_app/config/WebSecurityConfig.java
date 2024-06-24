@@ -57,7 +57,7 @@ public class WebSecurityConfig {
                                 .passwordParameter("password")
                                 .loginPage("/members/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/", true)
+                                .defaultSuccessUrl("/tasks", true)
                                 .permitAll()
                 )
                 .userDetailsService(customUserDetailsService)

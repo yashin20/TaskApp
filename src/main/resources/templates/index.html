@@ -2,24 +2,30 @@
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/headerstyles.css">
-    <link rel="stylesheet" href="/css/footerstyles.css">
+    <title>Task App</title>
+    <link rel="stylesheet" href="/css/main-styles.css">
+    <link rel="stylesheet" href="/css/header-styles.css">
+    <link rel="stylesheet" href="/css/footer-styles.css">
 </head>
 <body>
 <!--header-->
 <header class="header" th:replace="~{fragments/header :: header}"></header>
 
+<div class="container">
 
-<h1>Index Page</h1>
+    <div class="start-form">
+        <h2>Task App Service</h2>
+        <!--task app image-->
+        <a href="/" role="button" class="logo-img">
+            <img src="/img/task-app.png" alt="task-app-img" class="task-app-img"/>
+        </a>
+        <!--회원가입 페이지 이동 버튼-->
+        <a href="/members/join"> 시작하기 </a>
+        <!--로그인 페이지 이동 버튼-->
+        <a href="members/login"> 기존 회원으로 로그인 </a>
+    </div>
 
-<p>로그인된 회원 : </p>
-<a th:text="${signedMember}" href="members/info"></a>
-
-<!--로그인 버튼-->
-<a href="members/login">로그인</a>
-
+</div>
 
 <!--footer-->
 <footer class="footer" th:replace="~{fragments/footer :: footer}"></footer>

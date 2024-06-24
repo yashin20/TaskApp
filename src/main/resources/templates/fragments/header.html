@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Header</title>
-    <link rel="stylesheet" href="/css/headerstyles.css">
+    <link rel="stylesheet" href="/css/header-styles.css">
 </head>
 <body>
 <header th:fragment="header">
     <nav class="header-nav">
         <div class="nav-container">
             <!-- 로고 -->
-            <a th:href="@{/}" class="nav-logo">Task App</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/}" class="nav-logo">Task App</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/tasks}" class="nav-logo">Task App</a>
 
             <div class="right-container">
                 <!-- 검색 폼 -->

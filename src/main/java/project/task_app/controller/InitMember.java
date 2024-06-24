@@ -61,7 +61,7 @@ public class InitMember {
                     "1q2w3e4r~!", "1q2w3e4r~!",
                     "wlddud8@gmail.com", "010-1111-1111"));*/
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 77; i++) {
                 taskService.createTask(new TaskRequestDto("title" + i + "By member1", "content" + i,
                         memberRepository.findById(member1ID).get()));
                 taskService.createTask(new TaskRequestDto("title" + i + "By member2", "content" + i,

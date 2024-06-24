@@ -1,13 +1,18 @@
 package project.task_app.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.task_app.dto.TaskRequestDto;
 import project.task_app.dto.TaskResponseDto;
+import project.task_app.entity.Member;
 import project.task_app.entity.Task;
 import project.task_app.exception.DataNotFoundException;
 import project.task_app.repository.TaskRepository;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +47,12 @@ public class TaskService {
         return new TaskResponseDto(task);
     }
 
+    //task 조회
+    public Task getTask(Long id) {
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("존재하지 않는 Task 입니다."));
+    }
+
 
     //Update Task(Task 수정)
     @Transactional
@@ -71,6 +82,46 @@ public class TaskService {
 
         //3. return delete task ID
         return requestDto.getId();
+    }
+
+
+    /**
+     * Member 의 Task 검색
+     */
+    public Page<Task> taskList(Member member, Pageable pageable) {
+
+        return taskRepository.findByMember(member, pageable);
+    }
+
+    /**
+     * Task 체크여부 수정
+     */
+    @Transactional
+    public void taskCheck(Long taskId) {
+        //1. Task 찾기
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new DataNotFoundException("존재하지 않는 Task 입니다."));
+
+        task.updateIsChecked();
+    }
+
+    /**
+     * finishedTaskList
+     * - "isChecked == true" 인 TaskList
+     * - "isChecked == false" 인 TaskList
+     */
+    public Page<Task> getIsCheckedTaskList(Member member, Boolean isChecked ,Pageable pageable) {
+        return taskRepository.findByMemberAndIsChecked(member, isChecked, pageable);
+    }
+
+    //전체 과업 수
+    public Integer totalTaskNum(Member member) {
+        return taskRepository.findByMember(member).size();
+    }
+
+    //완료 과업 수
+    public Integer checkTaskNum(Member member, Boolean isChecked) {
+        return taskRepository.findByMemberAndIsChecked(member, isChecked).size();
     }
 
 }

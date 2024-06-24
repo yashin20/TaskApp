@@ -31,6 +31,8 @@ public class Task extends BaseEntity{
     private String title; //일정명
     private String content; //설명
 
+    private Boolean isChecked = false; //체크(과업 완료) 여부
+
     //Task 의 주인
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") //FK Column
@@ -47,5 +49,25 @@ public class Task extends BaseEntity{
         }
 
 //        setUpdatedAt(LocalDateTime.now());
+    }
+
+    //체크 여부 변경 (isChecked)
+    public void updateIsChecked() {
+        //isChecked == false -> ture
+        if (!this.isChecked) {
+            this.isChecked = true;
+        }
+        //isChecked == true -> false
+        else {
+            this.isChecked = false;
+        }
+    }
+
+
+    public Task(Long id, String title, String content, Member member) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.member = member;
     }
 }
