@@ -21,6 +21,7 @@ public class Task extends BaseEntity{
      * task_id(PK)
      * title
      * content
+     * isChecked
      * member_id(FK)
      */
 

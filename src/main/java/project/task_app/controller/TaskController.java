@@ -33,10 +33,6 @@ public class TaskController {
     private final TaskService taskService;
     private final MemberService memberService;
 
-    @GetMapping("/test")
-    public String test() {
-        return "tasks/task-update";
-    }
 
     // 현재 로그인된 회원의 task list
     @GetMapping("")
@@ -125,6 +121,9 @@ public class TaskController {
 
         model.addAttribute("task", responseDto);
 
+
+        model.addAttribute("signedMember", memberService.getCurrentUsername());
+
         return "tasks/task-info";
     }
 
@@ -138,6 +137,9 @@ public class TaskController {
 
         //기존 내용 보내기
         model.addAttribute("task", new TaskRequestDto(taskId, task.getTitle(), task.getContent()));
+
+
+        model.addAttribute("signedMember", memberService.getCurrentUsername());
 
         return "tasks/task-update";
     }
