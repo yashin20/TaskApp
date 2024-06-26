@@ -59,6 +59,7 @@ TASK
  - SpringBoot 3.2.6
  - JPA(Spring Data JPA)
  - Spring Security
+ - OAuth2.0
 
 ##### Build Tool
  - Gradle 8.7
