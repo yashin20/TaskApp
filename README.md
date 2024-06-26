@@ -124,18 +124,35 @@ TASK
     <summary>TASK</summary>
 
    **1. Task 목록**  
-   ![image](https://github.com/yashin20/TaskApp/assets/92693776/2e39df83-6bb5-4f36-838b-d9a5e4531c8d)
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/2e39df83-6bb5-4f36-838b-d9a5e4531c8d)  
+   화면 왼편에 페이징된 Task 테이블을 확인할 수 있다.  
 
 
+   **2. Task 상세정보**  
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/38918305-a9dc-43af-998a-d43d9d12a503)  
 
 
-   **2. Task 생성**
+   **3. Task 생성**  
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/94d580db-4ee2-466c-841b-3bfdecdeae2e)  
+   화면 오른편에 Task 작성 폼을 확인할 수 있다.  
 
-   **3. Task 수정**
 
-   **4. Task 삭제**
+   **4. Task 수정**  
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/19a733e3-c902-49e8-b6bb-ca47d3c72f7a)  
+   파란색 "Task 수정" 버튼을 클릭하여, Task 수정 페이지로 이동한다.  
 
-   **5. Task 완료 체크 기능 화면**
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/212d2dac-56ae-4283-8b33-c4dc7098ef58)  
+   Task Title, Task Content 를 수정하고 "SAVE TASK" 를 클릭하여, Task 수정을 완료한다.  
+
+
+   **5. Task 삭제**  
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/743ab935-f531-47c7-9af6-d5ba2953fca6)  
+   "Task 삭제"를 클릭하여, Task를 삭제한다.  
+
+
+   **6. Task 완료 체크 기능 화면**  
+   ![GIF](https://github.com/yashin20/TaskApp/assets/92693776/6ce34493-2878-45a3-96bd-f78b268a5a87)  
+   Task를 체크 표시, 체크 표시 해제를 할 수 있고, 체크된 Task 비율이 시각적으로 표시되는 것을 확인할 수 있다.  
 
     
   </details>
