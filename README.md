@@ -261,12 +261,17 @@ TASK
 
 
 ### 2-2. DB 설계
-
-
-### 2-3. API 설계
-
+![image](https://github.com/yashin20/TaskApp/assets/92693776/bc650a40-e364-482b-ba13-a9b09eb70f13)  
   
 
+### 2-3. API 설계
+**회원(Member) 관련 API**  
+![image](https://github.com/yashin20/TaskApp/assets/92693776/3c72adb1-12d1-4f02-864c-edadb96ed4e4)  
+
+**Task 관련 API**  
+![image](https://github.com/yashin20/TaskApp/assets/92693776/83207f28-78c2-49d3-bb76-7162d3b8b2e7)  
+
+  
 
 
 ## 개발 내용
