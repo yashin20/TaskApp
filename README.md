@@ -169,7 +169,90 @@ TASK
 <summary>패키지 구조 보기</summary>
 
 ```
-
+📦src
+ ┣ 📂main
+ ┃ ┣ 📂java
+ ┃ ┃ ┗ 📂project
+ ┃ ┃ ┃ ┗ 📂task_app
+ ┃ ┃ ┃ ┃ ┣ 📂config
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomUserDetailsService.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜WebSecurityConfig.java
+ ┃ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜HomeController.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜InitMember.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberController.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜TaskController.java
+ ┃ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberRequestDto.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberResponseDto.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜TaskRequestDto.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜TaskResponseDto.java
+ ┃ ┃ ┃ ┃ ┣ 📂entity
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜BaseEntity.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜Member.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜Task.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRole.java
+ ┃ ┃ ┃ ┃ ┣ 📂exception
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜DataAlreadyExistsException.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜DataNotFoundException.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜GlobalExceptionHandler.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜PasswordCheckFailedException.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜UnauthorizedAccessException.java
+ ┃ ┃ ┃ ┃ ┣ 📂oauth
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomOAuth2UserService.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜OAuthAttributes.java
+ ┃ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜TaskRepository.java
+ ┃ ┃ ┃ ┃ ┣ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberService.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜TaskService.java
+ ┃ ┃ ┃ ┃ ┗ 📜TaskAppApplication.java
+ ┃ ┗ 📂resources
+ ┃ ┃ ┣ 📂static
+ ┃ ┃ ┃ ┣ 📂css
+ ┃ ┃ ┃ ┃ ┣ 📜footer-styles.css
+ ┃ ┃ ┃ ┃ ┣ 📜header-styles.css
+ ┃ ┃ ┃ ┃ ┣ 📜info-styles.css
+ ┃ ┃ ┃ ┃ ┣ 📜info-update-styles.css
+ ┃ ┃ ┃ ┃ ┣ 📜join-styles.css
+ ┃ ┃ ┃ ┃ ┣ 📜main-styles.css
+ ┃ ┃ ┃ ┃ ┣ 📜styles.css
+ ┃ ┃ ┃ ┃ ┣ 📜task-info-styles.css
+ ┃ ┃ ┃ ┃ ┗ 📜task-styles.css
+ ┃ ┃ ┃ ┗ 📂img
+ ┃ ┃ ┃ ┃ ┣ 📜check-icon.png
+ ┃ ┃ ┃ ┃ ┣ 📜empty-circle.png
+ ┃ ┃ ┃ ┃ ┣ 📜github-icon.png
+ ┃ ┃ ┃ ┃ ┣ 📜google-logo.png
+ ┃ ┃ ┃ ┃ ┣ 📜kakao-logo.png
+ ┃ ┃ ┃ ┃ ┣ 📜naver-logo.png
+ ┃ ┃ ┃ ┃ ┗ 📜task-app.png
+ ┃ ┃ ┣ 📂templates
+ ┃ ┃ ┃ ┣ 📂fragments
+ ┃ ┃ ┃ ┃ ┣ 📜footer.html
+ ┃ ┃ ┃ ┃ ┗ 📜header.html
+ ┃ ┃ ┃ ┣ 📂members
+ ┃ ┃ ┃ ┃ ┣ 📜info-update.html
+ ┃ ┃ ┃ ┃ ┣ 📜info.html
+ ┃ ┃ ┃ ┃ ┣ 📜join.html
+ ┃ ┃ ┃ ┃ ┣ 📜login.html
+ ┃ ┃ ┃ ┃ ┗ 📜password-update.html
+ ┃ ┃ ┃ ┣ 📂tasks
+ ┃ ┃ ┃ ┃ ┣ 📜task-info.html
+ ┃ ┃ ┃ ┃ ┣ 📜task-list.html
+ ┃ ┃ ┃ ┃ ┗ 📜task-update.html
+ ┃ ┃ ┃ ┗ 📜index.html
+ ┃ ┃ ┣ 📜application-oauth.yml
+ ┃ ┃ ┗ 📜application.yml
+ ┗ 📂test
+ ┃ ┗ 📂java
+ ┃ ┃ ┗ 📂project
+ ┃ ┃ ┃ ┗ 📂task_app
+ ┃ ┃ ┃ ┃ ┣ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜MemberServiceTest.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜TaskServiceTest.java
+ ┃ ┃ ┃ ┃ ┗ 📜TaskAppApplicationTests.java
 ```
 
 
