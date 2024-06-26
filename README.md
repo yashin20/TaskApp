@@ -123,6 +123,20 @@ TASK
   <details>
     <summary>TASK</summary>
 
+   **1. Task 목록**  
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/2e39df83-6bb5-4f36-838b-d9a5e4531c8d)
+
+
+
+
+   **2. Task 생성**
+
+   **3. Task 수정**
+
+   **4. Task 삭제**
+
+   **5. Task 완료 체크 기능 화면**
+
     
   </details>
 
