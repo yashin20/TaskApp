@@ -77,6 +77,43 @@ TASK
  
   <details>
     <summary>회원</summary>
+  
+   **1. 회원가입 화면** 
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/671ba3b5-c449-4942-8a85-6d80d9c7ed6c)  
+
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/e7a42011-46d6-44eb-90d6-0f4e0f29750d)  
+   ※ 회원가입 폼의 유효성 검사 에러 메시지를 확인 할 수 있다.  
+ 
+
+   **2. 로그인 화면**
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/032b0208-f1f8-46fd-926e-dba07d0cb31a)  
+
+
+   **3. 회원정보 화면**  
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/3bd743d9-d183-4eaf-a8bd-0d96426f909d)
+   우측 상단, 현재 로그인된 회원명을 클릭하여 회원 정보 페이지로 이동  
+
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/4d8f0f3b-d797-4cdf-933f-4e32aa2dbafa)  
+   현재 회원의 "회원 정보" , "완료 과업", "비완료 과업" 을 확인 할 수 있다.
+
+
+   **4. 회원정보 수정 화면 (Email, Phone)**  
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/455b3d36-6b2e-4398-9f9f-f6e6c97b0d41)  
+   "회원 정보 수정" 버튼을 클릭하여, 회원 정보 수정 페이지로 이동한다.
+
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/b7871b20-6c0a-4977-9fc4-9f0cd4e0a45f)  
+   Email, Phone 을 수정하고 'SAVE' 버튼을 누른다.  
+
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/750572e5-813f-4881-885f-962a15108479)  
+   수정된 회원 정보(Email, Phone) 을 확인 할 수 있다.  
+
+
+   **5. 회원정보 수정 화면 (Password)**  
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/31f39f48-5523-4d29-985a-9e2598b8cf42)  
+
+
+   **6. 회원 탈퇴 화면**  
+   ![image](https://github.com/yashin20/TaskApp/assets/92693776/9c7e74d4-2043-4eef-a235-24af96afc183)  
 
     
   </details>
@@ -121,7 +158,7 @@ TASK
 
 - <a href="https://notorious.tistory.com/343" target="_blank">[TaskApp] 프로젝트 환경 설정</a>
 - <a href="https://notorious.tistory.com/344" target="_blank">[TaskApp] Spring Security 로그인 구현 하기</a>
-- <a href="https://notorious.tistory.com/345" target="_blank">[TaskApp] [TaskApp] 회원정보 수정하기 (E-mail, Phone)</a>
+- <a href="https://notorious.tistory.com/345" target="_blank">[TaskApp] 회원정보 수정하기 (E-mail, Phone)</a>
 - <a href="https://notorious.tistory.com/346" target="_blank">[TaskApp] 회원정보 수정하기 - 2 (Password)</a>
 - <a href="https://notorious.tistory.com/347" target="_blank">[TaskApp] Google 로그인 구현하기</a>
 - <a href="https://notorious.tistory.com/348" target="_blank">[TaskApp] NAVER 로그인 구현 하기</a>
