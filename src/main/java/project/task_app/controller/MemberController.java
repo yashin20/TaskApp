@@ -60,11 +60,13 @@ public class MemberController {
 
         //유효성 검사 오류 시, 에러 처리 로직
         if (bindingResult.hasErrors()) {
-            //에러 메시지 반환
+            /*//에러 메시지 반환
             List<String> errorMassage = bindingResult.getAllErrors().stream()
                     .map(objectError -> objectError.getDefaultMessage())
                     .collect(Collectors.toList());
-            model.addAttribute("errorMessage", errorMassage);
+            model.addAttribute("errorMessage", errorMassage);*/
+
+            model.addAttribute("bindingResult", bindingResult);
 
             return "members/join";
         }
@@ -81,7 +83,7 @@ public class MemberController {
             return "members/join";
         }
 
-        return "redirect:/";
+        return "redirect:/tasks";
     }
 
 
