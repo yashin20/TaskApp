@@ -19,10 +19,11 @@ import project.task_app.oauth.CustomOAuth2UserService;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    @Autowired private CustomUserDetailsService customUserDetailsService;
+    @Autowired private CustomUserDetailsServiceAuthorities customUserDetailsServiceAuthorities;
 
     /*OAuth*/
     @Autowired private CustomOAuth2UserService customOAuth2UserService;
+
 
 
     // PasswordEncoder Bean 등록 - password 암호화 (방식 - BCryptPasswordEncoder)
@@ -60,7 +61,7 @@ public class WebSecurityConfig {
                                 .defaultSuccessUrl("/tasks", true)
                                 .permitAll()
                 )
-                .userDetailsService(customUserDetailsService)
+                .userDetailsService(customUserDetailsServiceAuthorities)
                 .logout(logout ->
                         logout
                                 .logoutUrl("/logout") //로그아웃 처리 URL

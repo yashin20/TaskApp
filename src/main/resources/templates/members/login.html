@@ -28,8 +28,9 @@
             <button type="submit">submit</button>
         </div>
 
-        <div th:if="${param.error}" style="color: red;">
-            <p th:text="${param.message}">Error message here</p>
+        <!-- Error message -->
+        <div th:if="${errorMessage}" style="color: red;">
+            <p th:text="${errorMessage}">Error message here</p>
         </div>
 
 

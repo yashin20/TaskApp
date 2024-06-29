@@ -146,11 +146,10 @@ public class MemberService {
 
     //로그인 인증 로직
     public boolean authenticate(String username, String password) {
-        Optional<Member> findMember = memberRepository.findByUsername(username);
-        if (findMember.isPresent()) {
-            return passwordEncoder.matches(password, findMember.get().getPassword());
-        }
-        return false;
+        Member findMember = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new DataNotFoundException("존재하지 않는 회원 입니다."));
+
+        return passwordEncoder.matches(password, findMember.getPassword());
     }
 
     /* 현재 로그인 회원 Username*/

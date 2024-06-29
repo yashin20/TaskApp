@@ -40,8 +40,13 @@ public class MemberController {
      * Login
      */
     @GetMapping("/login")
-    public String loginForm(Model model) {
+    public String loginForm(@RequestParam(value = "error", required = false) String error,
+                                            Model model) {
         model.addAttribute("loginForm", new MemberRequestDto());
+        if (error != null) {
+            String errorMessage = (String) model.asMap().get("errorMessage");
+            model.addAttribute("errorMessage", errorMessage);
+        }
         return "members/login";
     }
 
@@ -60,12 +65,6 @@ public class MemberController {
 
         //유효성 검사 오류 시, 에러 처리 로직
         if (bindingResult.hasErrors()) {
-            /*//에러 메시지 반환
-            List<String> errorMassage = bindingResult.getAllErrors().stream()
-                    .map(objectError -> objectError.getDefaultMessage())
-                    .collect(Collectors.toList());
-            model.addAttribute("errorMessage", errorMassage);*/
-
             model.addAttribute("bindingResult", bindingResult);
 
             return "members/join";
@@ -261,29 +260,15 @@ public class MemberController {
         // 현재 로그인된 회원 객체
         Member currentMember = getCurrentMember();
 
-        //유효성 검사 오류 발생시
+        /*1. 유효성 검사 */
         if (bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
 
-            //id, currentPassword, new password, new password check
-            MemberRequestDto requestDto = new MemberRequestDto(currentMember.getId(), "", "", "", Boolean.TRUE);
-            model.addAttribute("requestDto", requestDto);
-
-            //에러 메시지 반환
-            List<String> errorMassage = bindingResult.getAllErrors().stream()
-                    .map(objectError -> objectError.getDefaultMessage())
-                    .collect(Collectors.toList());
-            model.addAttribute("errorMessage", errorMassage);
-
-            return "members/password-update"; // 유효성 검사 실패 시 다시 폼으로
+            return "members/password-update";
         }
 
-        //현재 비밀번호 검사
-        if (memberService.authenticate(currentMember.getUsername(), dto.getPassword())) {
-
-            //id, currentPassword, new password, new password check
-            MemberRequestDto requestDto = new MemberRequestDto(currentMember.getId(), "", "", "", Boolean.TRUE);
-            model.addAttribute("requestDto", requestDto);
-
+        /*2. 현재 비밀번호 검사 */
+        if (!memberService.authenticate(currentMember.getUsername(), dto.getCurrentPassword())) {
             model.addAttribute("errorMessage", "현재 비밀번호가 알맞지 않습니다.");
 
             return "members/password-update";
