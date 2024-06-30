@@ -123,17 +123,17 @@ public class MemberService {
 
     //Delete Member(회원 삭제)
     @Transactional
-    public Long deleteMember(MemberRequestDto requestDto) {
+    public Long deleteMember(Long memberId) {
 
         //1. member 찾기
-        Member member = memberRepository.findById(requestDto.getId())
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new DataNotFoundException("존재하지 않는 회원 입니다."));
 
         //2. delete member
         memberRepository.delete(member);
 
         //3. Return delete member ID
-        return requestDto.getId();
+        return memberId;
     }
 
 
@@ -156,6 +156,13 @@ public class MemberService {
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
+    }
+
+    /* 현재 로그인 회원*/
+    public Member getCurrentMember() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return memberRepository.findByUsername(authentication.getName())
+                .orElseThrow(() -> new DataNotFoundException("존재하지 않는 회원 입니다."));
     }
 
 }

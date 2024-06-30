@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -34,31 +35,69 @@ public class TaskController {
     private final MemberService memberService;
 
 
-    // 현재 로그인된 회원의 task list
+    /**
+     * Task List (페이징, 검색 조건)
+     * @param pageable : 페이징 조건
+     * @param keyword : 검색 조건
+     * @param isChecked : 달성 여부 (체크 여부)
+     */
     @GetMapping("")
     public String home(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                       @RequestParam(value = "keyword", required = false) String keyword,
+                       @RequestParam(value = "isChecked", required = false) String isChecked,
                        Model model) {
 
         //task create form 넘기기
         model.addAttribute("taskForm", new TaskRequestDto());
 
-
-        //현재 로그인된 username
+        //현재 로그인된 username (Header 표시용)
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("signedMember", authentication.getName());
 
         //현재 로그인된 member
         Member member = memberService.findByUsername(authentication.getName());
 
-        Page<Task> tasks = taskService.taskList(member, pageable);
+
+        Page<Task> tasks;
+        /** 검색 조건 설정 */
+        if (keyword != null && !keyword.isEmpty()) {
+            /* searchKeyword X , isChecked : "true" */
+            if ("checked".equals(isChecked)) {
+                tasks = taskService.getIsCheckedTaskList(member, true, pageable);
+            }
+            /* searchKeyword X , isChecked : "false" */
+            else if ("unchecked".equals(isChecked)) {
+                tasks = taskService.getIsCheckedTaskList(member, false, pageable);
+            }
+            /* searchKeyword X */
+            else {
+                tasks = taskService.taskList(member, pageable);
+            }
+        } else {
+            /* searchKeyword O , isChecked : "true" */
+            if ("checked".equals(isChecked)) {
+                tasks = taskService.searchIsChecked(member, true, keyword, pageable);
+            }
+            /* searchKeyword O , isChecked : "false" */
+            else if ("unchecked".equals(isChecked)) {
+                tasks = taskService.searchIsChecked(member, false, keyword, pageable);
+            }
+            /* searchKeyword O */
+            else {
+                tasks = taskService.search(member, keyword, pageable);
+            }
+        }
         Page<TaskResponseDto> list = tasks.map(TaskResponseDto::new);
+
 
         //task dto list
         model.addAttribute("tasks", list);
+        model.addAttribute("keyword", keyword); //검색 키워드
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber()); //이전 페이지 정보
         model.addAttribute("next", pageable.next().getPageNumber()); //다음 페이지 정보
         model.addAttribute("hasPrevious", list.hasPrevious()); //이전 페이지 존재 여부
         model.addAttribute("hasNext", list.hasNext()); //다음 페이지 존재 여부
+
 
         //페이지 번호
         /** 페이지 블록 계산
@@ -109,7 +148,6 @@ public class TaskController {
         taskService.createTask(dto);
 
         return "redirect:/tasks";
-
     }
 
     /**

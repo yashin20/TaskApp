@@ -16,4 +16,12 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findByMember(Member member); //전체 Task 목록
     List<Task> findByMemberAndIsChecked(Member member, Boolean isChecked); //전체 Task 체크 목록
+
+
+    //Task Title 검색 (페이징)
+    Page<Task> findByMemberAndTitleContaining(Member member, String searchKeyword, Pageable pageable);
+
+
+    Page<Task> findByMemberAndIsCheckedAndTitleContaining(Member member, Boolean isChecked, String searchKeyword, Pageable pageable);
+
 }

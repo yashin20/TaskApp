@@ -124,4 +124,28 @@ public class TaskService {
         return taskRepository.findByMemberAndIsChecked(member, isChecked).size();
     }
 
+    /**
+     * Task Title 검색
+     */
+    public Page<Task> search(Member member, String searchKeyword, Pageable pageable) {
+        return taskRepository.findByMemberAndTitleContaining(member, searchKeyword, pageable);
+    }
+
+    /**
+     * @return : Page<Task> && isChecked == (true, false)
+     * @Param : Page<Task>
+     */
+    /*public Page<Task> pagingCheck(Page<Task> list, Boolean isChecked) {
+
+    }*/
+
+
+    /**
+     * searchKeyword
+     * isChecked
+     * Member
+     */
+    public Page<Task> searchIsChecked(Member member, Boolean isChecked, String searchKeyword, Pageable pageable) {
+        return taskRepository.findByMemberAndIsCheckedAndTitleContaining(member, isChecked, searchKeyword, pageable);
+    }
 }

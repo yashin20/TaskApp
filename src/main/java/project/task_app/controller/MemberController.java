@@ -1,5 +1,7 @@
 package project.task_app.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.task_app.dto.MemberRequestDto;
 import project.task_app.dto.MemberResponseDto;
+import project.task_app.dto.TaskRequestDto;
 import project.task_app.dto.TaskResponseDto;
 import project.task_app.entity.Member;
 import project.task_app.entity.Task;
@@ -288,5 +292,30 @@ public class MemberController {
         }
 
         return "redirect:/members/info";
+    }
+
+
+    /**
+     * 회원 삭제
+     */
+    @PostMapping("/delete")
+    public String deleteTask(HttpServletRequest request, HttpServletResponse response) {
+
+        //1. 삭제 회원 찾기
+        Member currentMember = getCurrentMember();
+
+        //2. 회원 삭제
+        memberService.deleteMember(currentMember.getId());
+
+        //3. 로그아웃 처리
+        logoutUser(request, response);
+
+        return "redirect:/";
+    }
+
+    // 회원 로그아웃 (세션 정리를 통한)
+    private void logoutUser(HttpServletRequest request, HttpServletResponse response) {
+        new SecurityContextLogoutHandler().logout(request, response, null);
+        SecurityContextHolder.clearContext(); //세션을 정리
     }
 }

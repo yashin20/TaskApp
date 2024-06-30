@@ -75,6 +75,9 @@
             <tr>
                 <th>ID</th>
                 <th>Title</th>
+                <th>
+                    <a href="#" onclick="toggleChecked(); return false;">Checked</a>
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -95,27 +98,31 @@
             </tbody>
         </table>
 
+        <form id="checkForm" th:action="@{/tasks}" method="get" style="display: none;">
+            <input type="hidden" name="isChecked" id="isCheckedInput" th:value="${isChecked}">
+        </form>
+
 
         <div class="pagination-box">
             <ul class="pagination">
 
                 <li class="page-item">
-                    <a th:if="${hasPrevious}" th:href="@{/tasks(page=${previous})}"
+                    <a th:if="${hasPrevious}" th:href="@{/tasks(keyword=${keyword}, page=${previous})}"
                        role="button" class="page-link">이전</a>
-                    <a th:if="${!hasPrevious}" th:href="@{/tasks(page=${previous})}"
+                    <a th:if="${!hasPrevious}" th:href="@{/tasks(keyword=${keyword}, page=${previous})}"
                        role="button" class="page-link disabled">이전</a>
                 </li>
 
                 <li class="page-item" th:each="pageNum : ${#numbers.sequence(startPage, endPage)}"
                     th:classappend="${pageNum == current} ? active : ''">
-                    <a th:href="@{/tasks(page=${pageNum - 1})}" th:text="${pageNum}"
+                    <a th:href="@{/tasks(keyword=${keyword}, page=${pageNum - 1})}" th:text="${pageNum}"
                        role="button" class="page-link">페이지 번호</a>
                 </li>
 
                 <li class="page-item">
-                    <a th:if="${hasNext}" th:href="@{/tasks(page=${next})}"
+                    <a th:if="${hasNext}" th:href="@{/tasks(keyword=${keyword}, page=${next})}"
                        role="button" class="page-link">다음</a>
-                    <a th:if="${!hasNext}" th:href="@{/tasks(page=${next})}"
+                    <a th:if="${!hasNext}" th:href="@{/tasks(keyword=${keyword}, page=${next})}"
                        role="button" class="page-link disabled">다음</a>
                 </li>
 
@@ -129,4 +136,41 @@
 <!--footer-->
 <footer class="footer" th:replace="~{fragments/footer :: footer}"></footer>
 </body>
+
+
+<script>
+    // 페이지 로드 시 실행되는 함수
+    window.onload = function() {
+        // localStorage에서 isChecked 값 가져오기
+        var savedCheckedValue = localStorage.getItem('isChecked');
+        var input = document.getElementById('isCheckedInput');
+
+        if (savedCheckedValue) {
+            // localStorage에 값이 있으면 해당 값으로 설정
+            input.value = savedCheckedValue;
+        } else {
+            // localStorage에 값이 없으면 초기값으로 설정
+            input.value = '';
+        }
+    };
+
+    function toggleChecked() {
+        var input = document.getElementById('isCheckedInput');
+
+        if (input.value === 'checked') {
+            input.value = 'unchecked';
+        } else if (input.value === 'unchecked') {
+            input.value = '';
+        } else {
+            input.value = 'checked';
+        }
+
+        // 변경된 isChecked 값을 localStorage에 저장
+        localStorage.setItem('isChecked', input.value);
+
+        // form 제출
+        document.getElementById('checkForm').submit();
+    }
+</script>
+
 </html>

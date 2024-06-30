@@ -37,7 +37,7 @@ public class Member extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.USER;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member" , cascade = CascadeType.REMOVE)
     private List<Task> tasks = new ArrayList<>();
 
 
